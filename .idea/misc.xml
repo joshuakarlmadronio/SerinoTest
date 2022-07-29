@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/joshu/AndroidStudioProjects/SerinoTest/app/src/main/res/drawable/ic_baseline_first_page_24.xml" value="0.244" />
+        <entry key="..\:/Users/joshu/AndroidStudioProjects/SerinoTest/app/src/main/res/drawable/ic_baseline_last_page_24.xml" value="0.244" />
+        <entry key="..\:/Users/joshu/AndroidStudioProjects/SerinoTest/app/src/main/res/drawable/ic_baseline_navigate_before_24.xml" value="0.244" />
+        <entry key="..\:/Users/joshu/AndroidStudioProjects/SerinoTest/app/src/main/res/drawable/ic_baseline_navigate_next_24.xml" value="0.244" />
+        <entry key="..\:/Users/joshu/AndroidStudioProjects/SerinoTest/app/src/main/res/drawable/ic_outline_error_outline_24.xml" value="0.244" />
+        <entry key="..\:/Users/joshu/AndroidStudioProjects/SerinoTest/app/src/main/res/layout/activity_products_list.xml" value="0.25" />
+        <entry key="..\:/Users/joshu/AndroidStudioProjects/SerinoTest/app/src/main/res/layout/fragment_products_list.xml" value="0.365625" />
+        <entry key="..\:/Users/joshu/AndroidStudioProjects/SerinoTest/app/src/main/res/layout/product_preview.xml" value="0.67" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

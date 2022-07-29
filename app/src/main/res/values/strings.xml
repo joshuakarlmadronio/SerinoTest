@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SerinoTest</string>
+    <string name="products">Products</string>
+    <string name="first_page">First page</string>
+    <string name="previous_page">Previous page</string>
+    <string name="next_page">Next page</string>
+    <string name="last_page">Last page</string>
+    <string name="pagination_label">%1$d to %2$d of %3$d</string>
+    <string name="error_loading_products">Error loading products!</string>
 </resources>
