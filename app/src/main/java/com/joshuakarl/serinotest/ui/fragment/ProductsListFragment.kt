@@ -1,5 +1,6 @@
 package com.joshuakarl.serinotest.ui.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,10 @@ class ProductsListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Info button listener
+        binding.info.setOnClickListener {
+            showInfo()
+        }
         // Pagination listeners
         binding.apply {
             productsListPaginationFirst.setOnClickListener {
@@ -127,9 +132,16 @@ class ProductsListFragment: Fragment() {
         }
     }
 
+    private fun showInfo() {
+        AlertDialog.Builder(context, R.style.AlertDialogTheme_SerinoTest)
+            .setTitle(getString(R.string.about_this_app))
+            .setMessage(getString(R.string.info_message))
+            .show()
+    }
+
     private fun ImageButton.enable(enable: Boolean = true) {
         this.isClickable = enable
         this.isEnabled = enable
-        this.alpha = if (enable) 1.0f else 0.4f
+        this.alpha = if (enable) 1.0f else 0.3f
     }
 }

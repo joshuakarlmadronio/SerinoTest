@@ -15,4 +15,21 @@
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="android:colorEdgeEffect">@color/fluorescent_blue</item>
     </style>
+
+    <style name="AlertDialogTheme.SerinoTest" parent="@android:style/Theme.Material.Light.Dialog.Alert">
+        <item name="android:textAppearanceSmall">@style/MyTextAppearanceSmall</item>
+        <item name="android:textAppearanceMedium">@style/MyTextAppearanceMedium</item>
+        <item name="android:textAppearanceLarge">@style/MyTextAppearanceLarge</item>
+    </style>
+
+    <style name="MyTextAppearanceSmall" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/worksans_extralight</item>
+    </style>
+    <style name="MyTextAppearanceMedium" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/worksans</item>
+    </style>
+    <style name="MyTextAppearanceLarge" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/worksans_semibold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
 </resources>
