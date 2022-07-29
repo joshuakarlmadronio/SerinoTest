@@ -21,6 +21,9 @@ class ProductsListFragment: Fragment() {
 
     private val viewModel by activityViewModels<ProductViewModel>()
 
+    data class Pagination(var skip: Int, var limit: Int = 10, var total: Int)
+    private var pagination: Pagination? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,7 +35,33 @@ class ProductsListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        // Pagination listeners
+        binding.apply {
+            productsListPaginationFirst.setOnClickListener {
+                pagination?.let {
+                    viewModel.getProducts(0)
+                    load()
+                }
+            }
+            productsListPaginationNext.setOnClickListener {
+                pagination?.let {
+                    viewModel.getProducts(it.skip + it.limit)
+                    load()
+                }
+            }
+            productsListPaginationLast.setOnClickListener {
+                pagination?.let {
+                    viewModel.getProducts(it.total - it.limit)
+                    load()
+                }
+            }
+            productsListPaginationPrevious.setOnClickListener {
+                pagination?.let {
+                    viewModel.getProducts(it.skip - it.limit)
+                    load()
+                }
+            }
+        }
 
         load()
     }
@@ -42,7 +71,8 @@ class ProductsListFragment: Fragment() {
             when (response) {
                 is Resource.Loading -> {
                     // Disable all Pagination while loading
-                    updatePaginationButtons(skip = 0, limit = 0, total = 0)
+                    pagination = Pagination(0, 0, 0)
+                    updatePaginationButtons()
                     binding.apply {
                         // Show loading progressbar
                         productsListLoading.visibility = View.VISIBLE
@@ -67,13 +97,15 @@ class ProductsListFragment: Fragment() {
                             // Pagination below
                             productsListPaginationLabel.text = context?.getString(
                                 R.string.pagination_label, (it.skip + 1), (it.skip + it.limit), it.total)
-                            updatePaginationButtons(it.skip, it.limit, it.total)
+                            pagination = Pagination(it.skip, it.limit, it.total)
+                            updatePaginationButtons()
                         }
                     }
                 }
                 is Resource.Error -> {
                     // Disable all Pagination if error
-                    updatePaginationButtons(skip = 0, limit = 0, total = 0)
+                    pagination = Pagination(0, 0, 0)
+                    updatePaginationButtons()
                     binding.apply {
                         // Show error message
                         productsListError.visibility = View.VISIBLE
@@ -86,12 +118,12 @@ class ProductsListFragment: Fragment() {
         }
     }
 
-    private fun updatePaginationButtons(skip: Int, limit: Int, total: Int) {
+    private fun updatePaginationButtons() {
         binding.apply {
-            productsListPaginationFirst.enable(skip > 0)
-            productsListPaginationPrevious.enable(skip > 0)
-            productsListPaginationLast.enable(skip + limit < total)
-            productsListPaginationNext.enable(skip + limit < total)
+            productsListPaginationFirst.enable(pagination!!.skip > 0)
+            productsListPaginationPrevious.enable(pagination!!.skip > 0)
+            productsListPaginationLast.enable((pagination!!.skip + pagination!!.limit) < pagination!!.total)
+            productsListPaginationNext.enable((pagination!!.skip + pagination!!.limit) < pagination!!.total)
         }
     }
 

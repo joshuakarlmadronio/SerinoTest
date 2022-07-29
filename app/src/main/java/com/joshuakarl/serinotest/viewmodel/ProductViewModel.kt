@@ -35,7 +35,6 @@ class ProductViewModel @Inject constructor(
             if (connection.hasConnection()) {
                 products.postValue(Resource.Loading())
                 val response = repo.getProducts(skip, limit)
-                Log.e("S", "SS")
                 products.postValue(parseResponse(response))
             } else {
                 products.postValue(Resource.Error("No connection!"))
