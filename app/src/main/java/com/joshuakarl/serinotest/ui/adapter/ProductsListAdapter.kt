@@ -12,7 +12,9 @@ import com.joshuakarl.serinotest.ui.fragment.ProductsListFragmentDirections
 import com.joshuakarl.serinotest.util.NumberFormatter
 import com.squareup.picasso.Picasso
 
-class ProductsListAdapter(private val products: List<Product>): RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
+class ProductsListAdapter(private val products: List<Product>)
+    : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>()
+{
     inner class ViewHolder(private val binding: ProductPreviewBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.root.setOnClickListener {

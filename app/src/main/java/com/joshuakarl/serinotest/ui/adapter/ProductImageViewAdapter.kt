@@ -10,7 +10,9 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 
-class ProductImageViewAdapter(private val images: List<Uri>) : RecyclerView.Adapter<ProductImageViewAdapter.ProductImageViewHolder>() {
+class ProductImageViewAdapter(private val images: List<Uri>)
+    : RecyclerView.Adapter<ProductImageViewAdapter.ProductImageViewHolder>()
+{
     inner class ProductImageViewHolder(private val binding: ProductImageBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(image: Uri) {
             val callback = object: Callback {

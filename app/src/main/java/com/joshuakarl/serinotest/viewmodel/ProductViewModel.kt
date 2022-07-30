@@ -7,17 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.joshuakarl.serinotest.model.Product
 import com.joshuakarl.serinotest.model.Resource
 import com.joshuakarl.serinotest.repo.ProductRepository
-import com.joshuakarl.serinotest.util.Connection
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Response
-import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductViewModel @Inject constructor(
     private val pref: SharedPreferences,
-    private val connection: Connection,
     private val repo: ProductRepository,
 ): ViewModel() {
 
@@ -41,28 +37,8 @@ class ProductViewModel @Inject constructor(
     }
 
     private suspend fun safeGetProducts(skip: Int, limit: Int) {
-        try {
-            if (connection.hasConnection()) {
-                products.postValue(Resource.Loading())
-                val response = repo.getProducts(skip, limit)
-                products.postValue(parseResponse(response))
-            } else {
-                products.postValue(Resource.Error("No connection!"))
-            }
-        } catch (t: Throwable) {
-            when (t) {
-                is IOException -> products.postValue(Resource.Error("Network failure!"))
-                else -> products.postValue(Resource.Error("Parse error. Cannot parse response!"))
-            }
-        }
-    }
-
-    private fun parseResponse(response: Response<Product.Response>): Resource<Product.Response> {
-        return if (response.isSuccessful) {
-            Resource.Success(response.body()!!)
-        } else {
-            Resource.Error(response.message())
-        }
+        products.postValue(Resource.Loading())
+        products.postValue(repo.getProducts(skip, limit))
     }
 
     companion object {

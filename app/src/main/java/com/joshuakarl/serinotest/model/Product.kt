@@ -1,11 +1,14 @@
 package com.joshuakarl.serinotest.model
 
 import android.net.Uri
+import androidx.room.Entity
+import androidx.room.TypeConverter
 import com.google.gson.*
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
+@Entity(tableName = "products", primaryKeys = ["id"])
 data class Product(
     val id: Int,
     val title: String,
@@ -17,7 +20,8 @@ data class Product(
     val brand: String,
     val category: String, // TODO Make Category class?
     val thumbnail: Uri,
-    val images: List<Uri>
+    val images: List<Uri>,
+    val timestamp: Long? = null
 ) {
     data class Response (
         @SerializedName("products")
@@ -84,6 +88,36 @@ data class Product(
                 thumbnail = Uri.parse(json.get("thumbnail").asString),
                 images = imagesUri
             )
+        }
+    }
+
+    // TODO put this in own entity but my eyes are tired
+    class UriTypeConverter {
+        @TypeConverter
+        fun fromUri(uri: Uri): String {
+            return uri.toString()
+        }
+        @TypeConverter
+        fun toUri(uriString: String): Uri {
+            return Uri.parse(uriString)
+        }
+        @TypeConverter
+        fun fromUris(uris: List<Uri>): String {
+            val urisJson = urisToJsonElement(uris)
+            return urisJson.toString()
+        }
+        @TypeConverter
+        fun toUris(urisString: String): List<Uri> {
+            val type = object : TypeToken<List<String>>() { }.type
+            val jsonElement = Gson().fromJson<List<String>>(urisString, type)
+            return jsonElement.map { Uri.parse(it) }
+        }
+    }
+
+    companion object {
+        fun urisToJsonElement(uris: List<Uri>): JsonElement {
+            val urisString = uris.map { uri -> uri.toString() }
+            return Gson().toJsonTree(urisString)
         }
     }
 }
