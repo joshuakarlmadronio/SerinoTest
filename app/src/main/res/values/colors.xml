@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="fluorescent_blue">#ff1ae5e5</color>
+    <color name="fluorescent_blue_half">#7f1ae5e5</color>
     <color name="pacific_blue">#ff00bcd4</color>
 </resources>

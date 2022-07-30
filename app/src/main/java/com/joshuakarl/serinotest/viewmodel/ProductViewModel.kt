@@ -1,6 +1,6 @@
 package com.joshuakarl.serinotest.viewmodel
 
-import android.util.Log
+import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,18 +16,28 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductViewModel @Inject constructor(
+    private val pref: SharedPreferences,
     private val connection: Connection,
     private val repo: ProductRepository,
 ): ViewModel() {
+
     // Observable
     val products: MutableLiveData<Resource<Product.Response>> = MutableLiveData()
 
     init {
-        getProducts(0)
+        // Load the last viewed page
+        val skip = pref.getInt(LAST_SKIP, 0)
+        getProducts(skip)
     }
 
     fun getProducts(skip: Int, limit: Int = 10) = viewModelScope.launch {
         safeGetProducts(skip, limit)
+
+        // Save the viewed page
+        with (pref.edit()) {
+            putInt(LAST_SKIP, skip)
+            apply()
+        }
     }
 
     private suspend fun safeGetProducts(skip: Int, limit: Int) {
@@ -53,5 +63,9 @@ class ProductViewModel @Inject constructor(
         } else {
             Resource.Error(response.message())
         }
+    }
+
+    companion object {
+        private const val LAST_SKIP = "LAST_SKIP"
     }
 }

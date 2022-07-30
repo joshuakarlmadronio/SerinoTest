@@ -20,6 +20,7 @@
         <item name="android:textAppearanceSmall">@style/MyTextAppearanceSmall</item>
         <item name="android:textAppearanceMedium">@style/MyTextAppearanceMedium</item>
         <item name="android:textAppearanceLarge">@style/MyTextAppearanceLarge</item>
+        <item name="textAppearanceSearchResultTitle">@style/MyTextAppearanceLarge</item>
     </style>
 
     <style name="MyTextAppearanceSmall" parent="TextAppearance.AppCompat">
@@ -32,4 +33,5 @@
         <item name="android:fontFamily">@font/worksans_semibold</item>
         <item name="android:textSize">24sp</item>
     </style>
+
 </resources>

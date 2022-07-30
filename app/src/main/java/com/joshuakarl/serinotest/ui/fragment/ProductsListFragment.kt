@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.joshuakarl.serinotest.R
+import com.joshuakarl.serinotest.databinding.DialogAlertBinding
 import com.joshuakarl.serinotest.databinding.FragmentProductsListBinding
 import com.joshuakarl.serinotest.model.Resource
 import com.joshuakarl.serinotest.ui.adapter.ProductsListAdapter
@@ -133,10 +134,16 @@ class ProductsListFragment: Fragment() {
     }
 
     private fun showInfo() {
-        AlertDialog.Builder(context, R.style.AlertDialogTheme_SerinoTest)
-            .setTitle(getString(R.string.about_this_app))
-            .setMessage(getString(R.string.info_message))
-            .show()
+        val dialogInfo = AlertDialog.Builder(context, R.style.AlertDialogTheme_SerinoTest)
+            .create()
+        val dialogBinding = DialogAlertBinding.inflate(LayoutInflater.from(context), null, false)
+        dialogBinding.apply {
+            alertDialogTitle.text = getString(R.string.about_this_app)
+            alertDialogMessage.text = getString(R.string.info_message)
+            alertDialogPositive.setOnClickListener{dialogInfo.dismiss()}
+        }
+        dialogInfo.setView(dialogBinding.root)
+        dialogInfo.show()
     }
 
     private fun ImageButton.enable(enable: Boolean = true) {
