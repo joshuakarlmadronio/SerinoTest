@@ -12,104 +12,127 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/product_detail_images_vp"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="300dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" >
+        </androidx.viewpager2.widget.ViewPager2>
 
-        <TextView
-            android:id="@+id/product_detail_title"
-            android:layout_width="0dp"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/product_detail_images_vp_indicator"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/worksans"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            app:layout_constraintEnd_toStartOf="@+id/product_detail_price"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/product_detail_images_vp"
-            tools:text="iPhone 9" />
-
-        <TextView
-            android:id="@+id/product_detail_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/worksans_semibold"
-            android:textColor="@color/pacific_blue"
-            android:textSize="22sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_detail_images_vp"
-            tools:text="₱549.00" />
-
-        <TextView
-            android:id="@+id/product_detail_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/worksans"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/product_detail_title"
-            tools:text="4.69" />
-
-        <ImageView
-            android:id="@+id/product_detail_rating_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            app:layout_constraintBottom_toBottomOf="@+id/product_detail_rating"
-            app:layout_constraintStart_toEndOf="@+id/product_detail_rating"
-            app:layout_constraintTop_toTopOf="@+id/product_detail_rating"
-            app:srcCompat="@drawable/ic_baseline_star_24"
-            app:tint="#FFC107" />
-
-        <TextView
-            android:id="@+id/product_detail_stock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/worksans_italic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_detail_price"
-            tools:text="94 left in stock" />
-
-        <TextView
-            android:id="@+id/product_detail_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/worksans_extralight"
-            android:textColor="@color/pacific_blue"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_detail_rating"
-            tools:text="In smartphones > Apple" />
-
-        <TextView
-            android:id="@+id/product_detail_description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/worksans"
-            android:textSize="16sp"
+            android:layout_gravity="bottom"
+            android:background="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/product_detail_images_vp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/product_detail_category"
-            tools:text="An apple mobile which is nothing like apple" />
+            app:tabBackground="@drawable/tab_selector"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp" />
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="16dp"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/product_detail_cv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_detail_description" />
+            app:layout_constraintTop_toBottomOf="@+id/product_detail_images_vp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/product_detail_horizontal_margin">
+
+                <TextView
+                    android:id="@+id/product_detail_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/worksans"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    app:layout_constraintEnd_toStartOf="@+id/product_detail_price"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="iPhone 9" />
+
+                <ImageView
+                    android:id="@+id/product_detail_rating_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/product_detail_rating"
+                    app:layout_constraintStart_toEndOf="@+id/product_detail_rating"
+                    app:layout_constraintTop_toTopOf="@+id/product_detail_rating"
+                    app:srcCompat="@drawable/ic_baseline_star_24"
+                    app:tint="#FFC107" />
+
+                <TextView
+                    android:id="@+id/product_detail_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/worksans"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/product_detail_title"
+                    tools:text="4.69" />
+
+                <TextView
+                    android:id="@+id/product_detail_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/worksans_semibold"
+                    android:textColor="@color/pacific_blue"
+                    android:textSize="22sp"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="₱549.00" />
+
+                <TextView
+                    android:id="@+id/product_detail_stock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/worksans_italic"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/product_detail_price"
+                    tools:text="94 left in stock" />
+
+                <TextView
+                    android:id="@+id/product_detail_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/worksans"
+                    android:textColor="@color/pacific_blue"
+                    android:textSize="12sp"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/product_detail_rating"
+                    tools:text="In smartphones > Apple" />
+
+                <TextView
+                    android:id="@+id/product_detail_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/worksans"
+                    android:textSize="16sp"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/product_detail_category"
+                    tools:text="An apple mobile which is nothing like apple" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

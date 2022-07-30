@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SerinoTest</string>
     <string name="preference_file_key">%1$s.PREFERENCE_FILE_KEY</string>
+    <string name="shared_element_transition_x">shared_element_transition_%1$d</string>
     <string name="products">Products</string>
     <string name="first_page">First page</string>
     <string name="previous_page">Previous page</string>
@@ -11,4 +12,7 @@
     <string name="about_this_app">About this app</string>
     <string name="info_message">Made by Joshua T. Madronio for Serino360\'s Android Kotlin technical exam.</string>
     <string name="ok">OK</string>
+    <string name="x_left_in_stock">%1$d left in stock!</string>
+    <string name="in_category_brand">In %1$s > %2$s</string>
+    <string name="product_image">Product image</string>
 </resources>

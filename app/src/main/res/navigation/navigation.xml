@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    app:startDestination="@id/productsListFragment">
+
+    <fragment
+        android:id="@+id/productsListFragment"
+        android:name="com.joshuakarl.serinotest.ui.fragment.ProductsListFragment"
+        android:label="ProductsListFragment" >
+        <action
+            android:id="@+id/action_productsListFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+        <argument
+            android:name="product"
+            app:argType="com.joshuakarl.serinotest.model.JsonElementParcelable" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.joshuakarl.serinotest.ui.fragment.ProductDetailFragment"
+        android:label="ProductDetailFragment" >
+        <action
+            android:id="@+id/action_productDetailFragment_to_productImageFragment"
+            app:destination="@id/productImageFragment" />
+        <argument
+            android:name="product"
+            app:argType="com.joshuakarl.serinotest.model.JsonElementParcelable" />
+    </fragment>
+    <fragment
+        android:id="@+id/productImageFragment"
+        android:name="com.joshuakarl.serinotest.ui.fragment.ProductImageFragment"
+        android:label="ProductImageFragment" >
+    </fragment>
+</navigation>

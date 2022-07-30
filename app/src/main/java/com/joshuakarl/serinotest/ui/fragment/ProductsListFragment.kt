@@ -9,14 +9,17 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.transition.Hold
 import com.joshuakarl.serinotest.R
 import com.joshuakarl.serinotest.databinding.DialogAlertBinding
 import com.joshuakarl.serinotest.databinding.FragmentProductsListBinding
 import com.joshuakarl.serinotest.model.Resource
 import com.joshuakarl.serinotest.ui.adapter.ProductsListAdapter
 import com.joshuakarl.serinotest.viewmodel.ProductViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ProductsListFragment: Fragment() {
     private var _binding: FragmentProductsListBinding? = null
     private val binding get() = _binding!!
@@ -100,6 +103,9 @@ class ProductsListFragment: Fragment() {
                                 setHasFixedSize(true)
                                 adapter = ProductsListAdapter(it.products)
                             }
+                            // Allow save scroll pos
+                            productsListRv.adapter?.stateRestorationPolicy =
+                                RecyclerView.Adapter.StateRestorationPolicy.ALLOW
                             // Pagination below
                             productsListPaginationLabel.text = context?.getString(
                                 R.string.pagination_label, (it.skip + 1), (it.skip + it.limit), it.total)

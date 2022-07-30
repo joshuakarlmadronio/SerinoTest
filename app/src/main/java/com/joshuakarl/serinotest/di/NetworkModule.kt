@@ -31,15 +31,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesGSONConverterFactory(): GsonConverterFactory {
-        val gson = GsonBuilder()
-            .registerTypeAdapter(Product::class.java, Product.Deserializer())
-            .create()
-        return GsonConverterFactory.create(gson)
-    }
-
-    @Provides
-    @Singleton
     fun providesRetrofit(okHttpClient: OkHttpClient, gsonConverterFactory: GsonConverterFactory): Retrofit =
         Retrofit.Builder()
             .baseUrl(API_BASE_URL)

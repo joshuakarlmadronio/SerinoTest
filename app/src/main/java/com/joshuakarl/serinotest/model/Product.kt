@@ -30,6 +30,34 @@ data class Product(
         val limit: Int,
     )
 
+    class Serializer: JsonSerializer<Product> {
+        override fun serialize(
+            src: Product?,
+            typeOfSrc: Type?,
+            context: JsonSerializationContext?
+        ): JsonElement {
+            val json = JsonObject()
+            src?.let {
+                json.apply {
+                    add("id", JsonPrimitive(it.id))
+                    add("title", JsonPrimitive(it.title))
+                    add("description", JsonPrimitive(it.description))
+                    add("price", JsonPrimitive(it.price))
+                    add("discountPercentage", JsonPrimitive(it.discountPercentage))
+                    add("rating", JsonPrimitive(it.rating))
+                    add("stock", JsonPrimitive(it.stock))
+                    add("brand", JsonPrimitive(it.brand))
+                    add("category", JsonPrimitive(it.category))
+                    add("thumbnail", JsonPrimitive(it.thumbnail.toString()))
+                    val imagesString = it.images.map { image -> image.toString() }
+                    val imagesJson = Gson().toJsonTree(imagesString)
+                    add("images", imagesJson)
+                }
+            }
+            return json
+        }
+    }
+
     class Deserializer: JsonDeserializer<Product> {
         override fun deserialize(
             json: JsonElement?,
