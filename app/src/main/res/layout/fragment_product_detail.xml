@@ -49,6 +49,39 @@
                 android:padding="@dimen/product_detail_horizontal_margin">
 
                 <TextView
+                    android:id="@+id/dummy_review_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/worksans"
+                    android:text="Phasellus pellentesque semper elit nec sagittis. Mauris eu magna at elit elementum dapibus. Curabitur eleifend nec arcu et mollis. Praesent porttitor molestie dui quis volutpat. In sollicitudin condimentum libero, vel viverra mauris gravida accumsan. Ut dictum neque fermentum mauris fermentum tincidunt. "
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dummy_review_name2" />
+
+                <ImageView
+                    android:id="@+id/dummy_review_star_icon2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@+id/dummy_review_name2"
+                    app:layout_constraintStart_toEndOf="@+id/dummy_review_name2"
+                    app:layout_constraintTop_toTopOf="@+id/dummy_review_name2"
+                    app:srcCompat="@drawable/ic_baseline_star_24"
+                    app:tint="@color/pacific_blue" />
+
+                <TextView
+                    android:id="@+id/dummy_review_name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/worksans"
+                    android:text="Mauris_Quis23 - 5.00"
+                    android:textColor="@color/pacific_blue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dummy_review_text" />
+
+                <TextView
                     android:id="@+id/product_detail_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -140,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:fontFamily="@font/worksans"
-                    android:text="Reviews (1)"
+                    android:text="Reviews (2)"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
