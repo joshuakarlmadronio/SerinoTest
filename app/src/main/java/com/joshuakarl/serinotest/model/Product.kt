@@ -21,7 +21,7 @@ data class Product(
     val category: String, // TODO Make Category class?
     val thumbnail: Uri,
     val images: List<Uri>,
-    val timestamp: Long? = null
+    var timestamp: Long? = null
 ) {
     data class Response (
         @SerializedName("products")
@@ -32,7 +32,12 @@ data class Product(
         val skip: Int,
         @SerializedName("limit")
         val limit: Int,
-    )
+    ) {
+        companion object {
+            const val LAST_SKIP = "LAST_SKIP"
+            const val LAST_TOTAL = "LAST_TOTAL"
+        }
+    }
 
     class Serializer: JsonSerializer<Product> {
         override fun serialize(

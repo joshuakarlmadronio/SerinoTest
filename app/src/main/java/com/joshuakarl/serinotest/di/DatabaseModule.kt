@@ -16,11 +16,12 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun providesProductsDB(@ApplicationContext context: Context): ProductsDB = Room.databaseBuilder(
-        context,
-        ProductsDB::class.java,
-        ProductsDB.DATABASE_NAME
-    ).build()
+    fun providesProductsDB(@ApplicationContext context: Context): ProductsDB =
+    Room.databaseBuilder(
+            context,
+            ProductsDB::class.java,
+            ProductsDB.DATABASE_NAME)
+        .build()
 
     @Provides
     @Singleton

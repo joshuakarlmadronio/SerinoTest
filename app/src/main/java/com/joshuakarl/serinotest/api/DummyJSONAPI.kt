@@ -11,6 +11,5 @@ interface DummyJSONAPI {
     @GET("/products?")
     suspend fun getProducts(
         @Query("skip") skip: Int,
-        @Query("limit") limit: Int
-    ): Response<Product.Response>
+        @Query("limit") limit: Int): Response<Product.Response>
 }

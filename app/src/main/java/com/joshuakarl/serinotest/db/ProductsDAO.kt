@@ -12,9 +12,14 @@ interface ProductsDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertProducts(products: List<Product>)
 
-    @Query("SELECT * FROM products ORDER BY id LIMIT :limit OFFSET :skip")
+    suspend fun insertProductsWithTimestamp(products: List<Product>) {
+        for (product in products) product.timestamp = System.currentTimeMillis()
+        insertProducts(products)
+    }
+
+    @Query("SELECT * FROM products WHERE id > :skip AND id <= (:skip + :limit) ORDER BY id")
     suspend fun getProducts(skip: Int, limit: Int): List<Product>
 
     @Query("DELETE FROM products WHERE timestamp < :timestamp")
-    fun purge(timestamp: Long)
+    suspend fun purge(timestamp: Long)
 }

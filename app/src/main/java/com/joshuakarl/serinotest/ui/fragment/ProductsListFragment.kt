@@ -1,6 +1,7 @@
 package com.joshuakarl.serinotest.ui.fragment
 
 import android.app.AlertDialog
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,20 +11,32 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.transition.Hold
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.joshuakarl.serinotest.R
 import com.joshuakarl.serinotest.databinding.DialogAlertBinding
 import com.joshuakarl.serinotest.databinding.FragmentProductsListBinding
+import com.joshuakarl.serinotest.model.Product
 import com.joshuakarl.serinotest.model.Resource
 import com.joshuakarl.serinotest.ui.adapter.ProductsListAdapter
 import com.joshuakarl.serinotest.viewmodel.ProductViewModel
+import com.joshuakarl.serinotest.worker.DatabaseWorker
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProductsListFragment: Fragment() {
+//    @EntryPoint
+//    @InstallIn(SingletonComponent::class)
+//    interface Injector { fun getPref(): SharedPreferences }
+//    private val injector = EntryPoints.get(context, ProductsListFragment.Injector::class.java)
+//    private val pref = injector.getPref()
+    @Inject
+    lateinit var pref: SharedPreferences
+
     private var _binding: FragmentProductsListBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel by activityViewModels<ProductViewModel>()
 
     data class Pagination(var skip: Int, var limit: Int = 10, var total: Int)
@@ -76,8 +89,8 @@ class ProductsListFragment: Fragment() {
     }
 
     private fun load() {
-        viewModel.products.observe(viewLifecycleOwner) { response ->
-            when (response) {
+        viewModel.products.observe(viewLifecycleOwner) { resource ->
+            when (resource) {
                 is Resource.Loading -> {
                     // Disable all Pagination while loading
                     pagination = Pagination(0, 0, 0)
@@ -90,7 +103,7 @@ class ProductsListFragment: Fragment() {
                     }
                 }
                 is Resource.Success -> {
-                    response.data?.let {
+                    resource.data?.let {
                         binding.apply {
                             // Hide Loading and Error GUI
                             productsListLoading.visibility = View.GONE
@@ -112,6 +125,14 @@ class ProductsListFragment: Fragment() {
                             pagination = Pagination(it.skip, it.limit, it.total)
                             updatePaginationButtons()
                         }
+                        // Save last total
+                        with (pref.edit()) {
+                            putInt(Product.Response.LAST_TOTAL, it.total)
+                            apply()
+                        }
+                        // Save to cache
+                        // At this point, we are sure our data is valid
+//                        requestSaveToCache(it.products)
                     }
                 }
                 is Resource.Error -> {
@@ -128,6 +149,16 @@ class ProductsListFragment: Fragment() {
                 }
             }
         }
+    }
+
+    private fun requestSaveToCache(products: List<Product>) {
+        val productStrings = products.map {
+            Product.Serializer().serialize(it, null, null).toString() }.toTypedArray()
+
+        val request = OneTimeWorkRequestBuilder<DatabaseWorker>()
+            .setInputData(workDataOf(DatabaseWorker.PRODUCTS_KEY to productStrings))
+            .build()
+        WorkManager.getInstance(requireContext()).enqueue(request)
     }
 
     private fun updatePaginationButtons() {

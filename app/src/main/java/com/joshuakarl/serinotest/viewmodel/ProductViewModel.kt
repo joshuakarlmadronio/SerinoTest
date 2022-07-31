@@ -22,7 +22,7 @@ class ProductViewModel @Inject constructor(
 
     init {
         // Load the last viewed page
-        val skip = pref.getInt(LAST_SKIP, 0)
+        val skip = pref.getInt(Product.Response.LAST_SKIP, 0)
         getProducts(skip)
     }
 
@@ -31,7 +31,7 @@ class ProductViewModel @Inject constructor(
 
         // Save the viewed page
         with (pref.edit()) {
-            putInt(LAST_SKIP, skip)
+            putInt(Product.Response.LAST_SKIP, skip)
             apply()
         }
     }
@@ -39,9 +39,5 @@ class ProductViewModel @Inject constructor(
     private suspend fun safeGetProducts(skip: Int, limit: Int) {
         products.postValue(Resource.Loading())
         products.postValue(repo.getProducts(skip, limit))
-    }
-
-    companion object {
-        private const val LAST_SKIP = "LAST_SKIP"
     }
 }
