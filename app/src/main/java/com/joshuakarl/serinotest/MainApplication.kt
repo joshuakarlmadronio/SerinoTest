@@ -19,8 +19,7 @@ class MainApplication: Application() {
         // Create and start the PurgeWorker
         Log.d(TAG, "Starting the PurgeWorker")
         val duration = Duration.ofMillis(
-            max(
-                PurgeWorker.CACHE_EXPIRY_MS, PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS)
+            max(PurgeWorker.CACHE_EXPIRY_MS, PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS)
         )
         val request = PeriodicWorkRequestBuilder<PurgeWorker>(duration)
             .build()

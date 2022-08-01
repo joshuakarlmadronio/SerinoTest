@@ -11,9 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import androidx.work.workDataOf
 import com.joshuakarl.serinotest.R
 import com.joshuakarl.serinotest.databinding.DialogAlertBinding
 import com.joshuakarl.serinotest.databinding.FragmentProductsListBinding
@@ -21,17 +18,11 @@ import com.joshuakarl.serinotest.model.Product
 import com.joshuakarl.serinotest.model.Resource
 import com.joshuakarl.serinotest.ui.adapter.ProductsListAdapter
 import com.joshuakarl.serinotest.viewmodel.ProductViewModel
-import com.joshuakarl.serinotest.worker.DatabaseWorker
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProductsListFragment: Fragment() {
-//    @EntryPoint
-//    @InstallIn(SingletonComponent::class)
-//    interface Injector { fun getPref(): SharedPreferences }
-//    private val injector = EntryPoints.get(context, ProductsListFragment.Injector::class.java)
-//    private val pref = injector.getPref()
     @Inject
     lateinit var pref: SharedPreferences
 
@@ -130,9 +121,6 @@ class ProductsListFragment: Fragment() {
                             putInt(Product.Response.LAST_TOTAL, it.total)
                             apply()
                         }
-                        // Save to cache
-                        // At this point, we are sure our data is valid
-//                        requestSaveToCache(it.products)
                     }
                 }
                 is Resource.Error -> {
@@ -149,16 +137,6 @@ class ProductsListFragment: Fragment() {
                 }
             }
         }
-    }
-
-    private fun requestSaveToCache(products: List<Product>) {
-        val productStrings = products.map {
-            Product.Serializer().serialize(it, null, null).toString() }.toTypedArray()
-
-        val request = OneTimeWorkRequestBuilder<DatabaseWorker>()
-            .setInputData(workDataOf(DatabaseWorker.PRODUCTS_KEY to productStrings))
-            .build()
-        WorkManager.getInstance(requireContext()).enqueue(request)
     }
 
     private fun updatePaginationButtons() {

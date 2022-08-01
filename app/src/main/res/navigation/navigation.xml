@@ -27,8 +27,9 @@
             android:id="@+id/action_productDetailFragment_to_productImageFragment"
             app:destination="@id/productImageFragment" />
         <argument
-            android:name="product"
-            app:argType="com.joshuakarl.serinotest.model.JsonElementParcelable" />
+            android:name="index"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/productImageFragment"

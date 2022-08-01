@@ -6,7 +6,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.joshuakarl.serinotest.R
 import com.joshuakarl.serinotest.databinding.ProductPreviewBinding
-import com.joshuakarl.serinotest.model.JsonElementParcelable
 import com.joshuakarl.serinotest.model.Product
 import com.joshuakarl.serinotest.ui.fragment.ProductsListFragmentDirections
 import com.joshuakarl.serinotest.util.NumberFormatter
@@ -16,9 +15,11 @@ class ProductsListAdapter(private val products: List<Product>)
     : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>()
 {
     inner class ViewHolder(private val binding: ProductPreviewBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Product) {
+        fun bind(position: Int) {
+            val product = products[position]
+
             binding.root.setOnClickListener {
-                showProductDetails(product)
+                showProductDetails(position)
             }
 
             binding.apply {
@@ -33,11 +34,8 @@ class ProductsListAdapter(private val products: List<Product>)
             }
         }
 
-        private fun showProductDetails(product: Product) {
-            // Anti-pattern?
-            val productJson = Product.Serializer().serialize(product, null, null)
-            val parcelable = JsonElementParcelable(productJson)
-            val action = ProductsListFragmentDirections.actionProductsListFragmentToProductDetailFragment(parcelable)
+        private fun showProductDetails(position: Int) {
+            val action = ProductsListFragmentDirections.actionProductsListFragmentToProductDetailFragment(position)
             binding.root.findNavController().navigate(action)
         }
     }
@@ -48,8 +46,7 @@ class ProductsListAdapter(private val products: List<Product>)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val product = products[position]
-        holder.bind(product)
+        holder.bind(position)
     }
 
     override fun getItemCount(): Int = products.size
