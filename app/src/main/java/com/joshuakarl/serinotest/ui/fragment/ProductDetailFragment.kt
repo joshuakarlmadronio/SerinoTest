@@ -5,14 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.commit
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.tabs.TabLayoutMediator
 import com.joshuakarl.serinotest.R
 import com.joshuakarl.serinotest.databinding.FragmentProductDetailBinding
 import com.joshuakarl.serinotest.model.Resource
-import com.joshuakarl.serinotest.ui.adapter.ProductImageViewAdapter
 import com.joshuakarl.serinotest.util.NumberFormatter
 import com.joshuakarl.serinotest.viewmodel.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,6 +40,17 @@ class ProductDetailFragment: Fragment() {
                 is Resource.Success -> {
                     resource.data?.let {
                         val product = it.products[args.index]
+
+                        // Product images viewpager fragment
+                        if (savedInstanceState == null) {
+                            val uriStrings = product.images.map { uri -> uri.toString() }.toTypedArray()
+                            val bundle = bundleOf(ProductImagesFragment.PRODUCT_URIS to uriStrings)
+                            childFragmentManager.commit {
+                                setReorderingAllowed(true)
+                                add(R.id.product_detail_images_fragment, ProductImagesFragment::class.java, bundle)
+                            }
+                        }
+
                         binding.apply {
                             productDetailTitle.text = product.title
                             productDetailPrice.text = NumberFormatter.getCurrencyString(product.price)
@@ -47,12 +58,7 @@ class ProductDetailFragment: Fragment() {
                             productDetailStock.text = getString(R.string.x_left_in_stock, product.stock)
                             productDetailCategory.text = getString(R.string.in_category_brand, product.category, product.brand)
                             productDetailDescription.text = product.description
-                            productDetailImagesVp.adapter = ProductImageViewAdapter(product.images)
                         }
-
-                        // Indicator
-                        TabLayoutMediator(binding.productDetailImagesVpIndicator, binding.productDetailImagesVp) { _, _ ->
-                        }.attach()
                     }
                 }
                 else -> {

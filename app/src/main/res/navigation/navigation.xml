@@ -33,7 +33,14 @@
     </fragment>
     <fragment
         android:id="@+id/productImageFragment"
-        android:name="com.joshuakarl.serinotest.ui.fragment.ProductImageFragment"
+        android:name="com.joshuakarl.serinotest.ui.fragment.ProductImagesFragment"
         android:label="ProductImageFragment" >
+        <argument
+            android:name="position"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="uriStrings"
+            app:argType="string[]" />
     </fragment>
 </navigation>
